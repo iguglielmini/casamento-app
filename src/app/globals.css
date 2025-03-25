@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
+  --background: #ededed;
   --foreground: #171717;
+  --marsala: #B57170;
+  --paragraph: #943922;
 }
 
 @theme inline {
@@ -16,11 +20,33 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --marsala: #B57170;
+    --bg-wedding: #CE8E70;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+  font-family: "Mrs Saint Delafield";
+}
+
+h2, h3{
+ font-family: 'Outfit', sans-serif;
+}
+
+/* p{
+  color: var(--paragraph);
+} */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out;
 }

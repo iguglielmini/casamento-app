@@ -1,103 +1,40 @@
-import Image from "next/image";
+"use client";
+import IntroPage from "./components/introPage/introPage";
+import ConfirmingPresence from "./components/confirmingPresence/confirmingPresence";
+import CardLocation from "./components/cardLocation/cardLocation";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main>
+      <IntroPage
+        backgroundImage="/wedding.jpg"
+        subtitle="Está chegando o nosso dia!"
+        title="Ítalo & Daniely"
+        weddingDate="2025-11-28T17:00:00"
+      />
+      <div className="flex flex-col items-center justify-center pb-8 pt-10 md:pt-0">
+        <h1 className="text-6xl md:text-6xl">Nossa História</h1>
+        <p className="text-center max-w-[600px] p-5 md:p-0">
+          Nós nos conhecemos há muito tempo, entre conversas e reclamações
+          divertidas no Instagram. Após um breve afastamento, aqui estamos, mais
+          próximos do que nunca, prontos para o grande dia do nosso casamento!
+        </p>
+      </div>
+      <div className="pt-10 bg-(--marsala) p-8 flex flex-col items-center justify-center">
+        <h1 className="text-6xl md:text-6xl text-amber-50">Cerimônia</h1>
+        <p className="text-center max-w-[600px] text-white p-5 md:p-0">
+          Não percam esse momento lindo e emocionante das nossas vidas. Contamos
+          com você para ser ainda mais especial!
+        </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <CardLocation
+          imageUrl="/vinttage.jpg"
+          locationName="Vinttage Casa de Eventos"
+          date="29 de Novembro de 2025 às 00:00"
+          mapsEmbedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.672912702654!2d-34.871793689047884!3d-7.1637595702606545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace9cfa13c71a5%3A0x49583301bfb4c765!2sVinttage%20Casa%20de%20Eventos!5e0!3m2!1spt-BR!2sbr!4v1742863982942!5m2!1spt-BR!2sbr"
+        />
+      </div>
+      <ConfirmingPresence />
+    </main>
   );
 }
