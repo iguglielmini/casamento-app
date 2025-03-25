@@ -64,7 +64,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen p-10 bg-gray-200">
+    <div className="min-h-screen p-10 bg-(--marsala)">
       <h1 className="text-4xl font-bold mb-4">Dashboard de Convidados</h1>
 
       <form onSubmit={addGuest} className="bg-white p-6 shadow rounded mb-6">
@@ -74,7 +74,7 @@ export default function Dashboard() {
           value={name}
           required
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 mr-2 rounded"
+          className="border p-2 md:mr-2 rounded w-full md:w-100"
         />
         <input
           type="text"
@@ -82,11 +82,11 @@ export default function Dashboard() {
           value={phone}
           required
           onChange={handlePhoneChange}
-          className="border p-2 mr-2 rounded"
+          className="border p-2 mr-2 mt-4 md:mt-0 rounded w-full md:w-50"
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-(--marsala) w-full md:w-50 text-white px-4 py-2 mt-4 rounded cursor-pointer"
         >
           Adicionar Convidado
         </button>
@@ -106,7 +106,7 @@ export default function Dashboard() {
             <tr key={guest.id}>
               <td className="p-2 border">{guest.name}</td>
               <td className="p-2 border">{formatPhone(guest.phone)}</td>
-              <td className="p-2 border">{guest.confirmed ? "✅" : "❌"}</td>
+              <td className="p-2 border text-center">{guest.confirmed ? "✅" : "❌"}</td>
               <td className="p-2 border">
                 <button
                   className="bg-red-500 text-white px-3 py-1 rounded"
@@ -122,7 +122,7 @@ export default function Dashboard() {
 
       <button
         onClick={logout}
-        className="bg-gray-600 text-white px-4 py-2 rounded mt-4"
+        className="bg-gray-600 text-white px-4 py-2 rounded mt-4 w-full md:w-50"
       >
         Sair
       </button>

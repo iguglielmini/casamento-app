@@ -38,10 +38,17 @@ export default function IntroPage({
     return () => clearInterval(timer);
   }, [weddingDate]);
 
+  const scrollToNextSection = () => {
+    const nextSection = document.getElementById("our-history");
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="relative min-h-[100vh] md:min-h-[75vh] flex flex-col items-center justify-center text-white overflow-hidden ">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat  md:max-h-[550px]"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:max-h-[550px]"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           filter: "blur(1.5px)",
@@ -101,6 +108,13 @@ export default function IntroPage({
         </div>
         <h1 className="text-md md:text-5xl pt-3">Até nos casarmos</h1>
       </div>
+
+      <button
+        onClick={scrollToNextSection}
+        className="md:hidden w-12 h-12 flex items-center justify-center rounded-full bg-(--bg-wedding) shadow text-gray-800 shadow animate-bounce"
+      >
+        ↓
+      </button>
     </section>
   );
 }
