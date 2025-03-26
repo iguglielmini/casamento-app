@@ -46,11 +46,12 @@ export default function IntroPage({
   };
 
   return (
-    <section className="relative min-h-[100vh] md:min-h-[75vh] flex flex-col items-center justify-center text-white overflow-hidden ">
+    <section className="relative min-h-[100vh] md:min-h-[75vh] flex flex-col items-center justify-center text-white overflow-hidden animate-fade-in">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:max-h-[550px]"
+        className="absolute inset-0 bg-cover bg-center  bg-no-repeat md:max-h-[550px]"
         style={{
           backgroundImage: `url(${backgroundImage})`,
+          // backgroundPosition: "center top",
           filter: "blur(1.5px)",
         }}
       ></div>

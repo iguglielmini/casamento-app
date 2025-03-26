@@ -1,73 +1,37 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { formatPhone, cleanPhone } from "@/utils/phoneUtils";
-
-interface Guest {
-  id: number;
-  name: string;
-  phone: string;
-  confirmed: boolean;
-}
+import { useState } from "react";
+import { useDashboard } from "@/contexts/dashboardContext";
+import { formatPhone } from "@/utils/phoneUtils";
 
 export default function Dashboard() {
-  const [guests, setGuests] = useState<Guest[]>([]);
+  const { 
+    guests, totalGuests, confirmedGuests, unconfirmedGuests, 
+    addGuest, deleteGuest, logout 
+  } = useDashboard();
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token !== "secret-dashboard-token") {
-      router.push("/login");
-    } else {
-      fetchGuests();
-    }
-  }, [router]);
-
-  const fetchGuests = async () => {
-    const res = await fetch("/api/guest/list");
-    const data = await res.json();
-    setGuests(data);
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(formatPhone(e.target.value));
-  };
-
-  const addGuest = async (e: React.FormEvent) => {
+  const handleAddGuest = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanedPhone = cleanPhone(phone);
-
-    await fetch("/api/guest/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone: cleanedPhone }),
-    });
+    await addGuest(name, phone);
     setName("");
     setPhone("");
-    fetchGuests();
-  };
-
-  const deleteGuest = async (id: number) => {
-    if (confirm("Deseja realmente excluir este convidado?")) {
-      await fetch(`/api/guest/delete/${id}`, {
-        method: "DELETE",
-      });
-      fetchGuests();
-    }
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
   };
 
   return (
     <div className="min-h-screen p-10 bg-(--marsala)">
       <h1 className="text-4xl font-bold mb-4">Dashboard de Convidados</h1>
 
-      <form onSubmit={addGuest} className="bg-white p-6 shadow rounded mb-6">
+      {/* Totais */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="bg-white p-4 shadow rounded">Total: {totalGuests}</div>
+        <div className="bg-green-200 p-4 shadow rounded">Confirmados: {confirmedGuests}</div>
+        <div className="bg-red-200 p-4 shadow rounded">Não confirmados: {unconfirmedGuests}</div>
+      </div>
+
+      {/* Formulário */}
+      <form onSubmit={handleAddGuest} className="bg-white p-6 shadow rounded mb-6">
         <input
           type="text"
           placeholder="Nome"
@@ -81,7 +45,7 @@ export default function Dashboard() {
           placeholder="Telefone"
           value={phone}
           required
-          onChange={handlePhoneChange}
+          onChange={(e) => setPhone(formatPhone(e.target.value))}
           className="border p-2 mr-2 mt-4 md:mt-0 rounded w-full md:w-50"
         />
         <button
@@ -92,6 +56,7 @@ export default function Dashboard() {
         </button>
       </form>
 
+      {/* Tabela de convidados */}
       <table className="bg-white w-full shadow rounded">
         <thead>
           <tr>
