@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎉 Casamento Ítalo & Daniely
 
-## Getting Started
+Bem-vindo ao projeto oficial da landing page para o casamento de Ítalo & Daniely. Esta aplicação possui funcionalidades modernas para gerenciar convidados, confirmar presenças e facilitar a organização do evento.
 
-First, run the development server:
+---
+
+## 🚀 Funcionalidades
+
+- **Landing Page:** Página principal com contador regressivo para o casamento.
+- **Confirmação de Presença:** Convidados confirmam sua presença através de nome e telefone.
+- **Dashboard Administrativo:**
+  - Cadastro e exclusão de convidados
+  - Total de convidados, confirmados e não confirmados
+  - Gerenciamento fácil e intuitivo
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+- **Next.js 14** (App Router)
+- **React**
+- **Tailwind CSS**
+- **TypeScript**
+- **Prisma ORM**
+- **SQLite** (facilmente substituível por PostgreSQL ou MySQL)
+- **Bcrypt** (criptografia de senha)
+
+---
+
+## 📦 Como instalar e rodar o projeto
+
+### Pré-requisitos
+
+- [Node.js](https://nodejs.org/) (Recomendado versão 18+)
+- [Git](https://git-scm.com/)
+
+### Passos de instalação
+
+```bash
+git clone https://github.com/seu-usuario/casamento-app.git
+cd casamento-app
+npm install
+```
+
+### Configuração do banco de dados
+
+Copie e ajuste as variáveis no arquivo `.env.example` para `.env`:
+
+```env
+DATABASE_URL="file:./dev.db"
+```
+
+Gere as migrações e seed inicial:
+
+```bash
+npx prisma migrate dev
+npm run prisma:seed
+```
+
+### Executar o projeto localmente
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse a aplicação:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Landing Page: [http://localhost:3000](http://localhost:3000)
+- Dashboard: [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Login admin padrão:**
+- Usuário: `admin`
+- Senha: `italoedaniely2025`
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧑‍💻 Estrutura do projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+src/
+├── app/
+│   ├── components (componentes reutilizáveis)
+│   ├── api (rotas backend)
+│   └── dashboard (administração)
+├── contexts/ (Context API)
+├── prisma/ (Prisma schema e seed)
+├── utils/ (funções auxiliares)
+└── public/ (imagens estáticas)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ✅ Boas práticas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Código organizado em componentes e contextos reutilizáveis.
+- Senhas criptografadas com bcrypt.
+- Uso de localStorage para evitar duplicidade na confirmação.
+- Máscara de telefone padrão brasileira.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🚨 Segurança
+
+- Credenciais armazenadas de forma segura e criptografada.
+- Dashboard protegido por autenticação.
+
+---
+
+## 📌 Licença
+
+Este projeto está sob licença MIT. Para mais detalhes, consulte o arquivo `LICENSE`.
+
+---
+
+🎊 **Ítalo & Daniely desejam que você aproveite esta aplicação e agradecem pela sua presença nesse momento tão especial!**
