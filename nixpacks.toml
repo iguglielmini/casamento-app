@@ -1,7 +1,19 @@
 [phases.setup]
+providers = ["nodejs_18", "npm-9_x", "openssl", "curl", "wget"]
 cmds = [
     "npx prisma generate",
-    "npx prisma db push || true",
-    "npx prisma migrate dev || true",
-    "npm run prisma:seed"
+    "npx prisma db push",
+    "npx prisma migrate dev"
 ]
+
+[phases.install]
+cmds = ["npm ci --legacy-peer-deps"]
+
+[phases.build]
+cmds = [
+    "npm run build"
+    "npm run prisma:seed",
+]
+
+[start]
+cmd = "npm run start"
