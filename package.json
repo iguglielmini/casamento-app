@@ -6,7 +6,7 @@
     "postinstall": "prisma generate",
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start -p 3001",
+    "start": "next start",
     "lint": "next lint",
     "prisma:seed": "ts-node --project tsconfig.prisma.json prisma/seed.ts",
     "test": "jest",

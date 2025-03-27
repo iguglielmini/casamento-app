@@ -14,9 +14,8 @@ cmds = [
 
 [phases.start]
 cmds = [
-    "ls -la .next",
-    "npx prisma migrate dev --name init || true",
-    "npx prisma db seed || true",
+    "npx prisma migrate dev || true",
+    "npm run prisma:seed",
     "npm run start"
 ]
 
