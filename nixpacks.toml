@@ -1,5 +1,18 @@
 [phases.setup]
-cmds = ["npm install", "npx prisma generate", "npx prisma db push"]
+cmds = [
+  "npm install",
+  "npx prisma generate",
+  "npx prisma db push || true"
+]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = [
+  "npm run build"
+]
+
+[phases.start]
+cmds = [
+  "npx prisma migrate dev --name init || true",
+  "npx prisma db seed || true",
+  "npm run start"
+]
