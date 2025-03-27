@@ -3,18 +3,16 @@ cmds = [
     "npm install",
     "npx prisma generate",
     "npx prisma db push || true"
+    "npx prisma migrate dev || true"
 ]
 
 [phases.build]
 cmds = [
-    "npm install",
-    "npx prisma generate",
     "npm run build"
 ]
 
 [phases.start]
 cmds = [
-    "npx prisma migrate dev || true",
     "npm run prisma:seed",
     "npm run start"
 ]
