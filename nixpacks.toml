@@ -16,3 +16,6 @@ cmds = [
   "npx prisma db seed || true",
   "npm run start"
 ]
+
+[variables]
+PORT = "3001"
