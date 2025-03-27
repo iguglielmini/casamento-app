@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -33,19 +34,30 @@ export default function Login() {
           type="text"
           placeholder="Username"
           required
-          className="border p-2 w-full mb-2 rounded"
+          className="border p-4 w-full mb-2 rounded-full"
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          className="border p-2 w-full mb-4 rounded"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            required
+            className="border p-4 w-full rounded-full pr-12"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </button>
+        </div>
+
         <button
           type="submit"
-          className="bg-(--marsala) text-white px-4 py-2 rounded"
+          className="bg-(--marsala) text-white px-4 py-4 w-full rounded-full"
         >
           Entrar
         </button>

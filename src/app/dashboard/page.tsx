@@ -2,26 +2,56 @@
 import { useState } from "react";
 import { useDashboard } from "@/contexts/dashboardContext";
 import { formatPhone } from "@/utils/phoneUtils";
+import Notification from "../components/notification/notification";
 
 export default function Dashboard() {
-  const { 
-    guests, totalGuests, confirmedGuests, unconfirmedGuests, 
-    addGuest, deleteGuest, logout 
+  const {
+    guests,
+    totalGuests,
+    confirmedGuests,
+    unconfirmedGuests,
+    addGuest,
+    deleteGuest,
+    logout,
   } = useDashboard();
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [notification, setNotification] = useState<{
+    type: "success" | "error" | "warning";
+    message: string;
+  } | null>(null);
 
   const handleAddGuest = async (e: React.FormEvent) => {
     e.preventDefault();
-    await addGuest(name, phone);
-    setName("");
-    setPhone("");
+    const result = await addGuest(name, phone);
+
+    if (result?.success) {
+      setNotification({
+        type: "success",
+        message: result.message || "Convidado adicionado com sucesso!",
+      });
+      setName("");
+      setPhone("");
+    } else {
+      setNotification({
+        type: result?.type || "error",
+        message: result?.message || "Erro ao adicionar convidado.",
+      });
+    }
+
+    setTimeout(() => setNotification(null), 4000);
   };
 
   return (
     <div className="min-h-screen p-10 bg-(--marsala)">
       <h1 className="text-4xl font-bold mb-4">Dashboard de Convidados</h1>
+
+      {notification && (
+        <div className="mb-4">
+          <Notification type={notification.type} message={notification.message} />
+        </div>
+      )}
 
       {/* Totais */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -71,7 +101,9 @@ export default function Dashboard() {
             <tr key={guest.id}>
               <td className="p-2 border">{guest.name}</td>
               <td className="p-2 border">{formatPhone(guest.phone)}</td>
-              <td className="p-2 border text-center">{guest.confirmed ? "✅" : "❌"}</td>
+              <td className="p-2 border text-center">
+                {guest.confirmed ? "✅" : "❌"}
+              </td>
               <td className="p-2 border">
                 <button
                   className="bg-red-500 text-white px-3 py-1 rounded"

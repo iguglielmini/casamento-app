@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { formatPhone } from "@/utils/phoneUtils";
 import { useConfirmPresence } from "@/contexts/ConfirmPresenceContext";
 
@@ -9,6 +10,7 @@ export default function ConfirmingPresence() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const confirmed = localStorage.getItem("guestConfirmed");
@@ -21,6 +23,7 @@ export default function ConfirmingPresence() {
     setMessage(result.message);
     if (result.success) {
       setIsConfirmed(true);
+      setIsModalOpen(false);
     }
   };
 
@@ -42,47 +45,89 @@ export default function ConfirmingPresence() {
 
   return (
     <div className="flex flex-col items-center justify-center p-8">
-      <form onSubmit={handleSubmit} className="md:pt-36 md:pb-36">
-        <img
-          src="/flores-retas.png"
-          className="w-full md:w-60 object-cover m-auto"
-        />
-        <h1 className="text-4xl mb-4 text-center">Confirme sua presença</h1>
-
-        <input
-          type="text"
-          placeholder="Seu nome completo"
-          value={name}
-          disabled={loading}
-          required
-          onChange={(e) => setName(e.target.value)}
-          className="border p-2 w-full mb-4 rounded"
-        />
-
-        <input
-          type="text"
-          placeholder="Número de telefone"
-          value={phone}
-          disabled={loading}
-          required
-          onChange={(e) => setPhone(formatPhone(e.target.value))}
-          className="border p-2 w-full mb-4 rounded"
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className={`bg-(--marsala) text-white px-4 py-2 w-full rounded cursor-pointer ${
-            loading ? "opacity-50" : ""
-          }`}
+      <img
+        src="/flores-retas.png"
+        className="w-full md:w-40 object-cover m-auto mb-4"
+      />
+      <h1 className="text-4xl md:text-6xl text-center mb-4">
+        Estamos ansiosos para comemorar com você!
+      </h1>
+      <h2 className="text-2xl text-center max-w-[600px]">
+        A sua presença já é um presente enorme. Se você desejar nos enviar algo
+        mais, nossa lista de presentes está no{" "}
+        <Link
+          className="text-amber-800"
+          href="https://www.ferreiracosta.com/lista-de-casamento/presentes/italoedaniely2"
+          target="_blank"
         >
-          {loading ? "Enviando..." : "Confirmar presença"}
-        </button>
+          Ferreira Costa.
+        </Link>
+      </h2>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="bg-(--marsala) text-white px-6 py-3 text-2xl md:text-3xl hover:opacity-90 transition rounded-full mt-6"
+      >
+        Confirme sua presença
+      </button>
 
-        {message && (
-          <p className="mt-4 animate-fade-in text-center">{message}</p>
-        )}
-      </form>
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-invert backdrop-opacity-10 flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md relative animate-fade-in">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-2 right-3 text-2xl font-bold text-gray-600 hover:text-gray-900"
+            >
+              &times;
+            </button>
+
+            <form onSubmit={handleSubmit}>
+              <img
+                src="/flores-retas.png"
+                className="w-full md:w-40 object-cover m-auto mb-4"
+              />
+              <h1 className="text-4xl md:text-6xl text-center mb-4">
+                Confirme sua presença
+              </h1>
+
+              <input
+                type="text"
+                placeholder="Seu nome completo"
+                value={name}
+                disabled={loading}
+                required
+                onChange={(e) => setName(e.target.value)}
+                className="border p-4 w-full mb-4 rounded-full"
+              />
+
+              <input
+                type="text"
+                placeholder="Número de telefone"
+                value={phone}
+                disabled={loading}
+                required
+                onChange={(e) => setPhone(formatPhone(e.target.value))}
+                className="border p-4 w-full mb-4 rounded-full"
+              />
+
+              <button
+                type="submit"
+                disabled={loading}
+                className={`bg-(--marsala) text-white px-3 py-3 w-full rounded-full ${
+                  loading ? "opacity-50" : ""
+                }`}
+              >
+                {loading ? "Enviando..." : "Confirmar presença"}
+              </button>
+
+              {message && (
+                <p className="mt-4 animate-fade-in text-center text-gray-700">
+                  {message}
+                </p>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

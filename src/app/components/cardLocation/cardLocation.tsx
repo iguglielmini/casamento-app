@@ -28,6 +28,7 @@ export default function CardLocation({
       </div>
       <div className="w-full h-64">
         <iframe
+          title="mapa-localizacao"
           src={mapsEmbedUrl}
           className="w-full h-full"
           style={{ border: 0 }}

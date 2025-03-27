@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { cleanPhone } from "@/utils/phoneUtils";
 import { useRouter } from "next/navigation";
 
@@ -16,12 +22,21 @@ interface DashboardContextType {
   confirmedGuests: number;
   unconfirmedGuests: number;
   fetchGuests: () => void;
-  addGuest: (name: string, phone: string) => void;
+  addGuest: (
+    name: string,
+    phone: string
+  ) => Promise<{
+    success: boolean;
+    type: "success" | "error" | "warning";
+    message: string;
+  }>;
   deleteGuest: (id: number) => void;
   logout: () => void;
 }
 
-const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
+const DashboardContext = createContext<DashboardContextType | undefined>(
+  undefined
+);
 
 export const useDashboard = () => {
   const context = useContext(DashboardContext);
@@ -51,12 +66,43 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   }, [router]);
 
   const addGuest = async (name: string, phone: string) => {
-    await fetch("/api/guest/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone: cleanPhone(phone) }),
-    });
-    fetchGuests();
+    try {
+      const res = await fetch("/api/guest/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone: cleanPhone(phone) }),
+      });
+
+      if (res.status === 409) {
+        return {
+          success: false,
+          type: "warning" as const,
+          message: "Este telefone já está cadastrado como convidado.",
+        };
+      }
+
+      if (!res.ok) {
+        return {
+          success: false,
+          type: "error" as const,
+          message: "Erro ao adicionar convidado. Tente novamente.",
+        };
+      }
+
+      await fetchGuests();
+      return {
+        success: true,
+        type: "success" as const,
+        message: "Convidado adicionado com sucesso!",
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        success: false,
+        type: "error" as const,
+        message: "Erro inesperado. Verifique sua conexão ou tente mais tarde.",
+      };
+    }
   };
 
   const deleteGuest = async (id: number) => {
@@ -72,7 +118,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const totalGuests = guests.length;
-  const confirmedGuests = guests.filter(g => g.confirmed).length;
+  const confirmedGuests = guests.filter((g) => g.confirmed).length;
   const unconfirmedGuests = totalGuests - confirmedGuests;
 
   return (
