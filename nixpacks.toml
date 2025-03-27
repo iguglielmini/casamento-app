@@ -8,14 +8,6 @@ cmds = [
 
 [phases.build]
 cmds = [
+    "npm run prisma:seed",
     "npm run build"
 ]
-
-[phases.start]
-cmds = [
-    "npm run prisma:seed",
-    "npm run start"
-]
-
-[variables]
-PORT = "3001"
