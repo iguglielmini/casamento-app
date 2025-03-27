@@ -2,7 +2,7 @@
 cmds = [
     "npm install",
     "npx prisma generate",
-    "npx prisma db push || true"
+    "npx prisma db push || true",
     "npx prisma migrate dev || true"
 ]
 
