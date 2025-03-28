@@ -1,19 +1,14 @@
+import { NextApiRequest } from "next";
+import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-interface DeleteParams {
-  params: {
-    id: string;
-  }
-}
-
 export async function DELETE(
-  _request: NextRequest,
-  { params }: DeleteParams
+  request: NextApiRequest
 ) {
-  const guestId = Number.parseInt(params.id);
+  const { id } = request.query as never;
+  const guestId = Number.parseInt(id);
 
   try {
     await prisma.guest.delete({
