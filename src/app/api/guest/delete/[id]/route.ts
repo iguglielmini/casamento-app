@@ -3,11 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
+interface DeleteParams {
+  params: {
+    id: string;
+  }
+}
+
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: DeleteParams
 ) {
-  const guestId = parseInt(params.id);
+  const guestId = Number.parseInt(params.id);
 
   try {
     await prisma.guest.delete({
