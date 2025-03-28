@@ -7,9 +7,10 @@ providers = [
     "wget"
 ]
 cmds = [
+    "export NIXPACKS_PATH=${NIXPACKS_PATH:-/app}",
     "npm install -g corepack",
     "corepack enable",
-    "corepack prepare pnpm@9.1.0 --activate",
+    "corepack prepare pnpm@10.7.0 --activate",
     "pnpm install",
     "pnpm prisma generate",
     "pnpm prisma db push || true",
