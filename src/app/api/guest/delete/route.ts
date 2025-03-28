@@ -7,13 +7,11 @@ export async function DELETE(
   request: NextRequest
 ) {
   const { searchParams } = request.nextUrl;
-  const id = searchParams.get("id") as string;
-
-  const guestId = Number.parseInt(id);
+  const id = Number.parseInt(searchParams.get("id") as string);
 
   try {
     await prisma.guest.delete({
-      where: { id: guestId },
+      where: { id },
     });
 
     return NextResponse.json(
@@ -21,7 +19,6 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error: ", error);
     return NextResponse.json(
       { error: "Erro ao deletar o convidado." },
       { status: 400 }

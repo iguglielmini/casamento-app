@@ -110,6 +110,7 @@ export default function IntroPage({
       </div>
 
       <button
+        type="button"
         onClick={scrollToNextSection}
         className="md:hidden w-12 h-12 flex items-center justify-center rounded-full bg-(--bg-wedding) shadow text-gray-800 shadow animate-bounce"
       >

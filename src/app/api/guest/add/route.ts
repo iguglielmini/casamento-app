@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     const guest = await prisma.guest.create({ data: { name, phone } });
     return NextResponse.json(guest, { status: 201 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { error: "Erro ao criar convidado." },
       { status: 400 }

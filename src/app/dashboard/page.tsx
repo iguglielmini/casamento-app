@@ -106,6 +106,7 @@ export default function Dashboard() {
               </td>
               <td className="p-2 border">
                 <button
+                  type="button"
                   className="bg-red-500 text-white px-3 py-1 rounded"
                   onClick={() => deleteGuest(guest.id)}
                 >
@@ -118,6 +119,7 @@ export default function Dashboard() {
       </table>
 
       <button
+        type="button"
         onClick={logout}
         className="bg-gray-600 text-white px-4 py-2 rounded mt-4 w-full md:w-50"
       >

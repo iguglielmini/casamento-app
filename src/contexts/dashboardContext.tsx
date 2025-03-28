@@ -96,7 +96,6 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
         message: "Convidado adicionado com sucesso!",
       };
     } catch (error) {
-      console.log(error);
       return {
         success: false,
         type: "error" as const,
@@ -107,7 +106,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
   const deleteGuest = async (id: number) => {
     if (confirm("Deseja realmente excluir este convidado?")) {
-      await fetch(`/api/guest/delete/${id}`, { method: "DELETE" });
+      await fetch(`/api/guest/delete?id=${id}`, { method: "DELETE" });
       fetchGuests();
     }
   };
