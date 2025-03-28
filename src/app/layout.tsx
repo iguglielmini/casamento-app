@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import Footer from "./components/footer/footer";
+import { Geist, Geist_Mono, Mrs_Saint_Delafield } from "next/font/google";
 import { ConfirmPresenceProvider } from "@/contexts/ConfirmPresenceContext";
+
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,6 +13,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const mrsSaintDelafield = Mrs_Saint_Delafield({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-mrs-saint-delafield",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${mrsSaintDelafield.variable} antialiased`}>
           <ConfirmPresenceProvider>
             {children}
             <Footer />
