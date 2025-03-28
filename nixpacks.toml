@@ -1,0 +1,27 @@
+[phases.setup]
+providers = [
+    "nodejs_18",
+    "pnpm",
+    "openssl",
+    "curl",
+    "wget"
+]
+cmds = [
+    "pnpm install -g prisma",
+    "pnpm prisma generate",
+    "pnpm prisma db push || true",
+    "pnpm prisma migrate dev || true"
+]
+
+[phases.install]
+cmds = ["pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = [
+    "pnpm prisma generate",  # Garante que o Prisma está configurado antes do build
+    "pnpm run build",
+    "pnpm run prisma:seed"
+]
+
+[start]
+cmd = "pnpm run start"
