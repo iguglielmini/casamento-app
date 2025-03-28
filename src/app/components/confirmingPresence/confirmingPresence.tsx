@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { formatPhone } from "@/utils/phoneUtils";
 import { useConfirmPresence } from "@/contexts/ConfirmPresenceContext";
 
@@ -31,10 +30,10 @@ export default function ConfirmingPresence() {
   if (isConfirmed) {
     return (
       <div className="flex flex-col items-center justify-center p-8">
-        <Image
+        <img
           alt="flores-retas"
           src="/flores-retas.png"
-          className="w-full md:w-60 object-cover m-auto"
+          className="w-full md:w-60 m-auto object-cover"
         />
         <h1 className="text-6xl mb-4 text-center">Presença confirmada!</h1>
         <h2 className="text-2xl text-center pt-8">
@@ -47,10 +46,10 @@ export default function ConfirmingPresence() {
 
   return (
     <div className="flex flex-col items-center justify-center p-8">
-      <Image
+      <img
         alt="flores-retas"
         src="/flores-retas.png"
-        className="w-full md:w-40 object-cover m-auto mb-4"
+        className="w-full md:w-40 m-auto mb-4"
       />
       <h1 className="text-4xl md:text-6xl text-center mb-4">
         Estamos ansiosos para comemorar com você!
@@ -86,10 +85,10 @@ export default function ConfirmingPresence() {
             </button>
 
             <form onSubmit={handleSubmit}>
-              <Image
+              <img
                 alt="flores-retas"
                 src="/flores-retas.png"
-                className="w-full md:w-40 object-cover m-auto mb-4"
+                className="w-full md:w-40 m-auto mb-4 object-cover"
               />
               <h1 className="text-4xl md:text-6xl text-center mb-4">
                 Confirme sua presença

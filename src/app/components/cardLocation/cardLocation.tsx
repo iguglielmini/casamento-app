@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 interface CardLocationProps {
   imageUrl: string;
   locationName: string;
@@ -18,7 +16,7 @@ export default function CardLocation({
   return (
     <div className="w-full max-w-4xl mx-auto shadow-2xl bg-(--foreground) rounded overflow-hidden my-8">
       <div className="flex flex-col md:flex-row items-center">
-        <Image
+        <img
           src={imageUrl}
           alt={locationName}
           className="w-full md:w-60 h-60 object-cover"
