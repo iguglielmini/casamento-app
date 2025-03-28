@@ -7,10 +7,10 @@ providers = [
     "wget"
 ]
 cmds = [
-    "export NIXPACKS_PATH=${NIXPACKS_PATH:-/app}",
     "npm install -g corepack",
     "corepack enable",
     "corepack prepare pnpm@10.7.0 --activate",
+    "pnpm approve-builds",
     "pnpm install",
     "pnpm prisma generate",
     "pnpm prisma db push || true",
@@ -29,3 +29,6 @@ cmds = [
 
 [start]
 cmd = "pnpm run start"
+
+[variables]
+NIXPACKS_NODE_VERSION=18
