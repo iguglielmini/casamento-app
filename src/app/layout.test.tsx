@@ -17,7 +17,7 @@ describe('RootLayout', () => {
     const ChildComponent = () => <p>Conteúdo principal</p>;
 
     // render apenas o conteúdo do body
-    const _ = render(
+    render(
       <RootLayout>
         <ChildComponent />
       </RootLayout>
