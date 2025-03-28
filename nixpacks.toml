@@ -1,7 +1,7 @@
 [phases.setup]
 providers = [
     "nodejs_18",
-    "pnpm",
+    "pnpm-8_x",  # Garante que o pnpm está disponível
     "openssl",
     "curl",
     "wget"
