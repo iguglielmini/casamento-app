@@ -31,4 +31,4 @@ cmds = [
 cmd = "pnpm run start"
 
 [variables]
-NIXPACKS_NODE_VERSION=18
+NIXPACKS_NODE_VERSION="18"
