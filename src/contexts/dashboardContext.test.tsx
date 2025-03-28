@@ -172,7 +172,7 @@ import {
         const { logout } = useDashboard();
         React.useEffect(() => {
           logout();
-        }, []);
+        }, [logout]);
         return <p>Logout executado</p>;
       };
   

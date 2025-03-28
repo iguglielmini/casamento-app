@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { formatPhone } from "@/utils/phoneUtils";
 import { useConfirmPresence } from "@/contexts/ConfirmPresenceContext";
 
@@ -30,7 +31,8 @@ export default function ConfirmingPresence() {
   if (isConfirmed) {
     return (
       <div className="flex flex-col items-center justify-center p-8">
-        <img
+        <Image
+          alt="flores-retas"
           src="/flores-retas.png"
           className="w-full md:w-60 object-cover m-auto"
         />
@@ -45,7 +47,8 @@ export default function ConfirmingPresence() {
 
   return (
     <div className="flex flex-col items-center justify-center p-8">
-      <img
+      <Image
+        alt="flores-retas"
         src="/flores-retas.png"
         className="w-full md:w-40 object-cover m-auto mb-4"
       />
@@ -64,6 +67,7 @@ export default function ConfirmingPresence() {
         </Link>
       </h2>
       <button
+        type="button"
         onClick={() => setIsModalOpen(true)}
         className="bg-(--marsala) text-white px-6 py-3 text-2xl md:text-3xl hover:opacity-90 transition rounded-full mt-6"
       >
@@ -74,6 +78,7 @@ export default function ConfirmingPresence() {
         <div className="fixed inset-0 bg-black/50 backdrop-invert backdrop-opacity-10 flex items-center justify-center z-50 animate-fade-in">
           <div className="bg-white rounded-lg p-6 w-full max-w-md relative animate-fade-in">
             <button
+              type="button"
               onClick={() => setIsModalOpen(false)}
               className="absolute top-2 right-3 text-2xl font-bold text-gray-600 hover:text-gray-900"
             >
@@ -81,7 +86,8 @@ export default function ConfirmingPresence() {
             </button>
 
             <form onSubmit={handleSubmit}>
-              <img
+              <Image
+                alt="flores-retas"
                 src="/flores-retas.png"
                 className="w-full md:w-40 object-cover m-auto mb-4"
               />
