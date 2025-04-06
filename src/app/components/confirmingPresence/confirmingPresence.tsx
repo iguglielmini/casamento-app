@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { formatPhone } from "@/utils/phoneUtils";
 import { useConfirmPresence } from "@/contexts/ConfirmPresenceContext";
+import SaveToCalendarButtons from "../saveToCalendarButtons/saveToCalendarButtons";
 
 export default function ConfirmingPresence() {
   const { confirmPresence, loading } = useConfirmPresence();
@@ -49,6 +50,9 @@ export default function ConfirmingPresence() {
             Ferreira Costa.
           </Link>
         </h2>
+        <div>
+          <SaveToCalendarButtons />
+        </div>
       </div>
     );
   }

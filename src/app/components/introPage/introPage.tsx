@@ -76,7 +76,7 @@ export default function IntroPage({
         </div>
       </div>
 
-      <div className="relative bg-(--marsala) bg-opacity-30 p-3 px-4 rounded-sm text-center shadow-xl backdrop-blur-sm w-full max-w-[700px]">
+      <div className="relative bg-(--marsala) bg-opacity-30 p-3 px-4 rounded-sm text-center shadow-xl backdrop-blur-sm w-full max-w-[320px] md:max-w-[700px]">
         <div
           className="absolute inset-1 bg-contain bg-no-repeat ml-[-60px] mb-[-30px] md:ml-[-40px] md:mb-[-60px]"
           style={{
@@ -84,7 +84,7 @@ export default function IntroPage({
           }}
         ></div>
 
-        <h1 className="text-md md:text-5xl p-1">Falta</h1>
+        <h1 className="text-3xl md:text-5xl p-1">Falta</h1>
         <div className="flex flex-wrap justify-center gap-6 md:gap-8">
           <div>
             <span className="text-3xl md:text-5xl">{timeLeft.days}</span>
