@@ -57,7 +57,7 @@ export default function Dashboard() {
           <button
             type="button"
             onClick={() => exportGuestsToCSV(guests)}
-            className="flex items-center bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded"
+            className="flex items-center justify-center bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded w-full md:w-auto"
           >
             <Download className="w-5 h-5 mr-2" />
             Exportar em CSV
@@ -66,7 +66,7 @@ export default function Dashboard() {
           <button
             type="button"
             onClick={logout}
-            className="bg-gray-600 hover:bg-gray-700  text-white px-4 py-2 rounded"
+            className="flex items-center justify-center w-full md:w-auto bg-gray-600 hover:bg-gray-700  text-white px-4 py-2 rounded"
           >
             Sair
           </button>
