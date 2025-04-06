@@ -14,6 +14,8 @@ interface Guest {
   name: string;
   phone: string;
   confirmed: boolean;
+  invitedBy: string;
+  hasCompanion: boolean;
 }
 
 interface DashboardContextType {
@@ -24,7 +26,9 @@ interface DashboardContextType {
   fetchGuests: () => void;
   addGuest: (
     name: string,
-    phone: string
+    phone: string,
+    invitedBy: string,
+    hasCompanion: boolean
   ) => Promise<{
     success: boolean;
     type: "success" | "error" | "warning";
@@ -65,12 +69,22 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [router]);
 
-  const addGuest = async (name: string, phone: string) => {
+  const addGuest = async (
+    name: string,
+    phone: string,
+    invitedBy: string,
+    hasCompanion: boolean
+  ) => {
     try {
       const res = await fetch("/api/guest/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone: cleanPhone(phone) }),
+        body: JSON.stringify({
+          name,
+          phone: cleanPhone(phone),
+          invitedBy,
+          hasCompanion,
+        }),
       });
 
       if (res.status === 409) {
@@ -80,7 +94,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
           message: "Este telefone já está cadastrado como convidado.",
         };
       }
-
+  
       if (!res.ok) {
         return {
           success: false,
@@ -88,7 +102,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
           message: "Erro ao adicionar convidado. Tente novamente.",
         };
       }
-
+  
       await fetchGuests();
       return {
         success: true,
@@ -96,6 +110,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
         message: "Convidado adicionado com sucesso!",
       };
     } catch (error) {
+      console.log(error);
       return {
         success: false,
         type: "error" as const,
@@ -103,7 +118,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       };
     }
   };
-
+  
   const deleteGuest = async (id: number) => {
     if (confirm("Deseja realmente excluir este convidado?")) {
       await fetch(`/api/guest/delete?id=${id}`, { method: "DELETE" });
@@ -116,7 +131,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     router.push("/login");
   };
 
-  const totalGuests = guests.length;
+  const totalGuests = guests.reduce((acc, guest) => acc + 1 + (guest.hasCompanion ? 1 : 0), 0);
   const confirmedGuests = guests.filter((g) => g.confirmed).length;
   const unconfirmedGuests = totalGuests - confirmedGuests;
 

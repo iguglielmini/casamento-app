@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Guest {
-  id          Int      @id @default(autoincrement())
-  name        String
-  phone       String   @unique
-  confirmed   Boolean  @default(false)
-  confirmedAt DateTime?
-  createdAt   DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String
+  phone        String   @unique
+  confirmed    Boolean  @default(false)
+  confirmedAt  DateTime?
+  createdAt    DateTime @default(now())
+  invitedBy    String   // "Noivo" | "Noiva" | "Ambos"
+  hasCompanion Boolean  @default(false)
 }
 
 model User {

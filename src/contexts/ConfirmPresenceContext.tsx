@@ -3,7 +3,11 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import { cleanPhone } from "@/utils/phoneUtils";
 
 interface ConfirmPresenceContextType {
-  confirmPresence: (phone: string, name: string) => Promise<{ success: boolean; message: string }>;
+  confirmPresence: (
+    phone: string,
+    name: string,
+    hasCompanion: boolean
+  ) => Promise<{ success: boolean; message: string }>;
   loading: boolean;
 }
 
@@ -20,14 +24,18 @@ export const useConfirmPresence = () => {
 export const ConfirmPresenceProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
 
-  const confirmPresence = async (phone: string, name: string) => {
+  const confirmPresence = async (
+    phone: string,
+    name: string,
+    hasCompanion: boolean
+  ) => {
     setLoading(true);
     const cleanedPhone = cleanPhone(phone);
 
     const res = await fetch("/api/guest/confirm", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone: cleanedPhone, name }),
+      body: JSON.stringify({ phone: cleanedPhone, name, hasCompanion }),
     });
 
     const data = await res.json();
@@ -35,9 +43,15 @@ export const ConfirmPresenceProvider = ({ children }: { children: ReactNode }) =
 
     if (res.ok) {
       localStorage.setItem("guestConfirmed", "true");
-      return { success: true, message: `Presença confirmada com sucesso, ${data.guest.name}!` };
+      return {
+        success: true,
+        message: `Presença confirmada com sucesso, ${data.guest.name}!`,
+      };
     } else {
-      return { success: false, message: data.error || "Ocorreu um erro na confirmação." };
+      return {
+        success: false,
+        message: data.error || "Ocorreu um erro na confirmação.",
+      };
     }
   };
 

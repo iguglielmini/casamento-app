@@ -8,6 +8,7 @@ export default function ConfirmingPresence() {
   const { confirmPresence, loading } = useConfirmPresence();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  const [hasCompanion, setHasCompanion] = useState(false);
   const [message, setMessage] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function ConfirmingPresence() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await confirmPresence(phone, name);
+    const result = await confirmPresence(phone, name, hasCompanion);
     setMessage(result.message);
     if (result.success) {
       setIsConfirmed(true);
@@ -36,9 +37,17 @@ export default function ConfirmingPresence() {
           className="w-full md:w-60 m-auto object-cover"
         />
         <h1 className="text-6xl mb-4 text-center">Presença confirmada!</h1>
-        <h2 className="text-2xl text-center pt-8">
+        <h2 className="text-2xl text-center pt-8 md:w-[600px]">
           Esperamos você no nosso casamento! Saiba que você é importante e sua
-          presença fará diferença!
+          presença fará diferença! Se você desejar nos enviar algo mais, nossa
+          lista de presentes está no{" "}
+          <Link
+            className="text-amber-800"
+            href="https://www.ferreiracosta.com/lista-de-casamento/presentes/italoedaniely2"
+            target="_blank"
+          >
+            Ferreira Costa.
+          </Link>
         </h2>
       </div>
     );
@@ -113,6 +122,32 @@ export default function ConfirmingPresence() {
                 onChange={(e) => setPhone(formatPhone(e.target.value))}
                 className="border p-4 w-full mb-4 rounded-full"
               />
+
+              <div className="mb-4">
+                <label className="block mb-2 font-semibold text-center">
+                  Vai levar acompanhante?
+                </label>
+                <div className="flex justify-center gap-6">
+                  <label>
+                    <input
+                      type="radio"
+                      checked={hasCompanion}
+                      onChange={() => setHasCompanion(true)}
+                      disabled={loading}
+                    />{" "}
+                    Sim
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      checked={!hasCompanion}
+                      onChange={() => setHasCompanion(false)}
+                      disabled={loading}
+                    />{" "}
+                    Não
+                  </label>
+                </div>
+              </div>
 
               <button
                 type="submit"

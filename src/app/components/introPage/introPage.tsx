@@ -76,19 +76,16 @@ export default function IntroPage({
         </div>
       </div>
 
-      <div className="relative bg-(--marsala) bg-opacity-30 p-3 rounded-sm text-center shadow-xl backdrop-blur-sm w-[320px] md:w-[600px]">
+      <div className="relative bg-(--marsala) bg-opacity-30 p-3 px-4 rounded-sm text-center shadow-xl backdrop-blur-sm w-full max-w-[700px]">
         <div
-          className="
-          absolute inset-1 bg-contain bg-no-repeat 
-          ml-[-60px] mb-[-30px] 
-          md:ml-[-40px] md:mb-[-60px]"
+          className="absolute inset-1 bg-contain bg-no-repeat ml-[-60px] mb-[-30px] md:ml-[-40px] md:mb-[-60px]"
           style={{
             backgroundImage: `url(/flores-marsala.png)`,
           }}
         ></div>
 
         <h1 className="text-md md:text-5xl p-1">Falta</h1>
-        <div className="flex justify-center space-x-4 md:space-x-8">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
           <div>
             <span className="text-3xl md:text-5xl">{timeLeft.days}</span>
             <h1 className="text-lg md:text-3xl">Dias</h1>

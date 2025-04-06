@@ -16,8 +16,13 @@ export default function Home() {
       />
       <div
         id="our-history"
-        className="flex flex-col items-center justify-center pb-8 pt-10 md:pt-0"
+        className="flex flex-col items-center justify-center pb-16 pt-10 md:pt-6"
       >
+        <img
+          alt="flores-retas"
+          src="/flores-retas.png"
+          className="w-full md:w-60 m-auto object-cover pb-8"
+        />
         <h1 className="text-6xl md:text-6xl">Nossa História</h1>
         <p className="text-center max-w-[600px] p-5 md:p-0">
           Nós nos conhecemos há muito tempo, entre conversas e reclamações

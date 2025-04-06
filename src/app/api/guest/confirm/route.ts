@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
-  const { phone, name } = await request.json();
+  const { phone, name, hasCompanion } = await request.json();
 
   const guest = await prisma.guest.findFirst({ where: { phone, name } });
 
@@ -15,13 +15,17 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  await prisma.guest.update({
+  const updatedGuest = await prisma.guest.update({
     where: { id: guest.id },
-    data: { confirmed: true, confirmedAt: new Date() },
+    data: {
+      confirmed: true,
+      confirmedAt: new Date(),
+      hasCompanion,
+    },
   });
 
   return NextResponse.json(
-    { message: "Presença confirmada!", guest },
+    { message: "Presença confirmada!", guest: updatedGuest },
     { status: 200 }
   );
 }
