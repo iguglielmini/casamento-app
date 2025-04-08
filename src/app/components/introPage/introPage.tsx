@@ -42,7 +42,7 @@ export default function IntroPage({
       <button
         type="button"
         onClick={scrollToNextSection}
-        className="w-20 h-20 flex items-center justify-center rounded-full bg-(--bg-wedding) shadow text-gray-800 shadow animate-bounce"
+        className="w-20 h-20 flex items-center justify-center rounded-full bg-(--bg-wedding) text-gray-800 shadow animate-bounce text-4xl"
       >
         ↓
       </button>
