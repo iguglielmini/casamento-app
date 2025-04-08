@@ -7,6 +7,7 @@ import { PlusCircle } from "lucide-react";
 interface GuestFormModalProps {
   onSubmit: (data: {
     name: string;
+    surname: string;
     phone: string;
     invitedBy: string;
     hasCompanion: boolean;
@@ -20,14 +21,16 @@ export default function GuestFormModal({
 }: GuestFormModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [phone, setPhone] = useState("");
   const [invitedBy, setInvitedBy] = useState("Ambos");
   const [hasCompanion, setHasCompanion] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, phone, invitedBy, hasCompanion });
+    onSubmit({ name, surname, phone, invitedBy, hasCompanion });
     setName("");
+    setSurname("");
     setPhone("");
     setInvitedBy("Ambos");
     setHasCompanion(false);
@@ -64,6 +67,16 @@ export default function GuestFormModal({
                 required
                 disabled={loading}
                 onChange={(e) => setName(e.target.value)}
+                className="border p-3 mb-3 w-full rounded"
+              />
+
+              <input
+                type="text"
+                placeholder="Sobrenome"
+                value={surname}
+                required
+                disabled={loading}
+                onChange={(e) => setSurname(e.target.value)}
                 className="border p-3 mb-3 w-full rounded"
               />
 

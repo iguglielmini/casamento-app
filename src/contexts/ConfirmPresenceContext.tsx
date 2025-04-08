@@ -6,6 +6,7 @@ interface ConfirmPresenceContextType {
   confirmPresence: (
     phone: string,
     name: string,
+    surname: string,
     hasCompanion: boolean
   ) => Promise<{ success: boolean; message: string }>;
   loading: boolean;
@@ -27,6 +28,7 @@ export const ConfirmPresenceProvider = ({ children }: { children: ReactNode }) =
   const confirmPresence = async (
     phone: string,
     name: string,
+    surname: string,
     hasCompanion: boolean
   ) => {
     setLoading(true);
@@ -35,7 +37,7 @@ export const ConfirmPresenceProvider = ({ children }: { children: ReactNode }) =
     const res = await fetch("/api/guest/confirm", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone: cleanedPhone, name, hasCompanion }),
+      body: JSON.stringify({ phone: cleanedPhone, name, surname, hasCompanion }),
     });
 
     const data = await res.json();

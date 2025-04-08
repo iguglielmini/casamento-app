@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 interface Guest {
   id: number;
   name: string;
+  surname: string;
   phone: string;
   confirmed: boolean;
   invitedBy: string;
@@ -26,6 +27,7 @@ interface DashboardContextType {
   fetchGuests: () => void;
   addGuest: (
     name: string,
+    surname: string,
     phone: string,
     invitedBy: string,
     hasCompanion: boolean
@@ -71,6 +73,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
   const addGuest = async (
     name: string,
+    surname: string,
     phone: string,
     invitedBy: string,
     hasCompanion: boolean
@@ -81,6 +84,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
+          surname,
           phone: cleanPhone(phone),
           invitedBy,
           hasCompanion,
@@ -94,7 +98,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
           message: "Este telefone já está cadastrado como convidado.",
         };
       }
-  
+
       if (!res.ok) {
         return {
           success: false,
@@ -102,7 +106,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
           message: "Erro ao adicionar convidado. Tente novamente.",
         };
       }
-  
+
       await fetchGuests();
       return {
         success: true,
@@ -118,7 +122,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       };
     }
   };
-  
+
   const deleteGuest = async (id: number) => {
     if (confirm("Deseja realmente excluir este convidado?")) {
       await fetch(`/api/guest/delete?id=${id}`, { method: "DELETE" });
@@ -126,14 +130,17 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const totalGuests = guests.reduce(
+    (acc, guest) => acc + 1 + (guest.hasCompanion ? 1 : 0),
+    0
+  );
+  const confirmedGuests = guests.filter((g) => g.confirmed).length;
+  const unconfirmedGuests = totalGuests - confirmedGuests;
+
   const logout = () => {
     localStorage.removeItem("token");
     router.push("/login");
   };
-
-  const totalGuests = guests.reduce((acc, guest) => acc + 1 + (guest.hasCompanion ? 1 : 0), 0);
-  const confirmedGuests = guests.filter((g) => g.confirmed).length;
-  const unconfirmedGuests = totalGuests - confirmedGuests;
 
   return (
     <DashboardContext.Provider

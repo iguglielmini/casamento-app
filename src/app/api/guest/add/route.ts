@@ -5,15 +5,19 @@ const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, phone, invitedBy, hasCompanion } = await request.json();
+    const { name, surname, phone, invitedBy, hasCompanion } = await request.json();
 
-    if (!name || !phone || !invitedBy) {
-      return NextResponse.json({ error: "Dados obrigatórios ausentes." }, { status: 400 });
+    // Validação básica
+    if (!name || !surname || !phone || !invitedBy) {
+      return NextResponse.json(
+        { error: "Dados obrigatórios ausentes." },
+        { status: 400 }
+      );
     }
-
     const guest = await prisma.guest.create({
       data: {
         name,
+        surname,
         phone,
         invitedBy,
         hasCompanion: Boolean(hasCompanion),

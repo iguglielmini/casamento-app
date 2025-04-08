@@ -9,19 +9,33 @@ export default function ConfirmingPresence() {
   const { confirmPresence, loading } = useConfirmPresence();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [hasCompanion, setHasCompanion] = useState(false);
   const [message, setMessage] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [errors, setErrors] = useState<{ name?: string; surname?: string; phone?: string }>({});
 
   useEffect(() => {
     const confirmed = localStorage.getItem("guestConfirmed");
     setIsConfirmed(confirmed === "true");
   }, []);
 
+  const validateInputs = () => {
+    const newErrors: typeof errors = {};
+    if (!name.trim()) newErrors.name = "Nome é obrigatório.";
+    if (!surname.trim()) newErrors.surname = "Sobrenome é obrigatório.";
+    if (!phone || phone.replace(/\D/g, "").length < 10) newErrors.phone = "Telefone inválido.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await confirmPresence(phone, name, hasCompanion);
+    if (!validateInputs()) return;
+
+    const result = await confirmPresence(phone, name, surname, hasCompanion);
     setMessage(result.message);
     if (result.success) {
       setIsConfirmed(true);
@@ -109,13 +123,29 @@ export default function ConfirmingPresence() {
 
               <input
                 type="text"
-                placeholder="Seu nome completo"
+                placeholder="Nome"
                 value={name}
                 disabled={loading}
                 required
                 onChange={(e) => setName(e.target.value)}
-                className="border p-4 w-full mb-4 rounded-full"
+                className={`border p-4 w-full mb-2 rounded-full ${errors.name ? "border-red-500" : ""}`}
               />
+              {errors.name && (
+                <p className="text-red-500 text-sm mb-2">{errors.name}</p>
+              )}
+
+              <input
+                type="text"
+                placeholder="Sobrenome"
+                value={surname}
+                disabled={loading}
+                required
+                onChange={(e) => setSurname(e.target.value)}
+                className={`border p-4 w-full mb-2 rounded-full ${errors.surname ? "border-red-500" : ""}`}
+              />
+              {errors.surname && (
+                <p className="text-red-500 text-sm mb-2">{errors.surname}</p>
+              )}
 
               <input
                 type="text"
@@ -124,8 +154,11 @@ export default function ConfirmingPresence() {
                 disabled={loading}
                 required
                 onChange={(e) => setPhone(formatPhone(e.target.value))}
-                className="border p-4 w-full mb-4 rounded-full"
+                className={`border p-4 w-full mb-2 rounded-full ${errors.phone ? "border-red-500" : ""}`}
               />
+              {errors.phone && (
+                <p className="text-red-500 text-sm mb-2">{errors.phone}</p>
+              )}
 
               <div className="mb-4">
                 <label className="block mb-2 font-semibold text-center">

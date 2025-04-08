@@ -27,16 +27,24 @@ export default function Dashboard() {
 
   const handleAddGuest = async ({
     name,
+    surname,
     phone,
     invitedBy,
     hasCompanion,
   }: {
     name: string;
+    surname: string;
     phone: string;
     invitedBy: string;
     hasCompanion: boolean;
   }) => {
-    const result = await addGuest(name, phone, invitedBy, hasCompanion);
+    const result = await addGuest(
+      name,
+      surname,
+      phone,
+      invitedBy,
+      hasCompanion
+    );
 
     setNotification({
       type: result.type,
@@ -111,7 +119,9 @@ export default function Dashboard() {
             ) : (
               guests.map((guest) => (
                 <tr key={guest.id}>
-                  <td className="p-2 border">{guest.name}</td>
+                  <td className="p-2 border">
+                    {guest.name} {guest.surname}
+                  </td>
                   <td className="p-2 border">{formatPhone(guest.phone)}</td>
                   <td className="p-2 border">{guest.invitedBy}</td>
                   <td className="p-2 border text-center">

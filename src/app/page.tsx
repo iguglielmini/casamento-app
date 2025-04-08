@@ -6,23 +6,27 @@ import Faq from "./components/faq/faq";
 import ProgramEvent from "./components/programEvent/programEvent";
 import SectionBlock from "./components/sectionBlock.tsx/sectionBlock";
 import ScrollFadeIn from "./components/scrollFadeIn/scrollFadeIn";
+import WeddingDate from "./components/weddingDate/weddingDate";
 
 export default function Home() {
   return (
     <main>
       <IntroPage
-        backgroundImage="/wedding.jpg"
+        backgroundImage="/intro-home.png"
         subtitle="Está chegando o nosso dia!"
         title="Ítalo & Daniely"
-        weddingDate="2025-11-28T19:00:00"
       />
-      <SectionBlock
-        id="our-history"
-        title="Nossa História"
-        text={`Nós nos conhecemos há muito tempo, entre conversas e reclamações
+      <ScrollFadeIn>
+        <WeddingDate id="our-history" weddingDate="2025-11-29T19:00:00" />
+      </ScrollFadeIn>
+      <ScrollFadeIn>
+        <SectionBlock
+          title="Nossa História"
+          text={`Nós nos conhecemos há muito tempo, entre conversas e reclamações
           divertidas no Instagram. Após um breve afastamento, aqui estamos, mais
           próximos do que nunca, prontos para o grande dia do nosso casamento!`}
-      />
+        />
+      </ScrollFadeIn>
       <ScrollFadeIn>
         <SectionBlock
           id="ceremony"

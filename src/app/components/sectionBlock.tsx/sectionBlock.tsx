@@ -2,7 +2,7 @@
 import React from "react";
 
 interface SectionBlockProps {
-  id: string;
+  id?: string;
   title: string;
   text: string;
   className?: string;
