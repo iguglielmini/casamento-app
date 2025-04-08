@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     data: {
       confirmed: true,
       confirmedAt: new Date(),
-      hasCompanion,
+      hasCompanion: Boolean(hasCompanion),
     },
   });
 

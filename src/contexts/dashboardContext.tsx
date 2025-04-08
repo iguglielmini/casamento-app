@@ -17,6 +17,7 @@ interface Guest {
   confirmed: boolean;
   invitedBy: string;
   hasCompanion: boolean;
+  type: "Amigos" | "Padrinhos" | "Familiar";
 }
 
 interface DashboardContextType {
@@ -30,7 +31,8 @@ interface DashboardContextType {
     surname: string,
     phone: string,
     invitedBy: string,
-    hasCompanion: boolean
+    hasCompanion: boolean,
+    type: "Amigos" | "Padrinhos" | "Familiar"
   ) => Promise<{
     success: boolean;
     type: "success" | "error" | "warning";
@@ -69,6 +71,19 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     } else {
       fetchGuests();
     }
+
+    // 🟢 BroadcastChannel para atualizar convidados confirmados
+    const channel = new BroadcastChannel("guest-confirmation");
+
+    channel.onmessage = (event) => {
+      if (event.data?.type === "CONFIRMED") {
+        fetchGuests(); // atualiza a lista em tempo real
+      }
+    };
+
+    return () => {
+      channel.close();
+    };
   }, [router]);
 
   const addGuest = async (
@@ -76,7 +91,8 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     surname: string,
     phone: string,
     invitedBy: string,
-    hasCompanion: boolean
+    hasCompanion: boolean,
+    type: "Amigos" | "Padrinhos" | "Familiar"
   ) => {
     try {
       const res = await fetch("/api/guest/add", {
@@ -88,6 +104,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
           phone: cleanPhone(phone),
           invitedBy,
           hasCompanion,
+          type,
         }),
       });
 
@@ -130,17 +147,17 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
+
   const totalGuests = guests.reduce(
     (acc, guest) => acc + 1 + (guest.hasCompanion ? 1 : 0),
     0
   );
   const confirmedGuests = guests.filter((g) => g.confirmed).length;
   const unconfirmedGuests = totalGuests - confirmedGuests;
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
-  };
 
   return (
     <DashboardContext.Provider

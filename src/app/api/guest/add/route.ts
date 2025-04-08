@@ -5,10 +5,11 @@ const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, surname, phone, invitedBy, hasCompanion } = await request.json();
+    const { name, surname, phone, invitedBy, hasCompanion, type } =
+      await request.json();
 
     // Validação básica
-    if (!name || !surname || !phone || !invitedBy) {
+    if (!name || !surname || !phone || !invitedBy || !type) {
       return NextResponse.json(
         { error: "Dados obrigatórios ausentes." },
         { status: 400 }
@@ -21,6 +22,7 @@ export async function POST(request: NextRequest) {
         phone,
         invitedBy,
         hasCompanion: Boolean(hasCompanion),
+        type,
       },
     });
 

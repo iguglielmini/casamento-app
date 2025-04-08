@@ -11,6 +11,7 @@ interface GuestFormModalProps {
     phone: string;
     invitedBy: string;
     hasCompanion: boolean;
+    type: "Amigos" | "Padrinhos" | "Familiar";
   }) => void;
   loading?: boolean;
 }
@@ -24,11 +25,14 @@ export default function GuestFormModal({
   const [surname, setSurname] = useState("");
   const [phone, setPhone] = useState("");
   const [invitedBy, setInvitedBy] = useState("Ambos");
+  const [type, setType] = useState<"Amigos" | "Padrinhos" | "Familiar">(
+    "Amigos"
+  );
   const [hasCompanion, setHasCompanion] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, surname, phone, invitedBy, hasCompanion });
+    onSubmit({ name, surname, phone, invitedBy, hasCompanion, type });
     setName("");
     setSurname("");
     setPhone("");
@@ -103,6 +107,26 @@ export default function GuestFormModal({
                   <option value="Noivo">Noivo</option>
                   <option value="Noiva">Noiva</option>
                   <option value="Ambos">Ambos</option>
+                </select>
+              </div>
+
+              <div className="mb-3">
+                <label className="block mb-1 font-semibold">
+                  Tipo de convidado:
+                </label>
+                <select
+                  value={type}
+                  onChange={(e) =>
+                    setType(
+                      e.target.value as "Amigos" | "Padrinhos" | "Familiar"
+                    )
+                  }
+                  className="border p-3 w-full rounded"
+                  disabled={loading}
+                >
+                  <option value="Amigos">Amigos</option>
+                  <option value="Padrinhos">Padrinhos</option>
+                  <option value="Familiar">Familiar</option>
                 </select>
               </div>
 
