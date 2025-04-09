@@ -156,7 +156,13 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     (acc, guest) => acc + 1 + (guest.hasCompanion ? 1 : 0),
     0
   );
-  const confirmedGuests = guests.filter((g) => g.confirmed).length;
+
+  const confirmedGuests = guests.reduce(
+    (acc, guest) =>
+      guest.confirmed ? acc + 1 + (guest.hasCompanion ? 1 : 0) : acc,
+    0
+  );
+
   const unconfirmedGuests = totalGuests - confirmedGuests;
 
   return (
