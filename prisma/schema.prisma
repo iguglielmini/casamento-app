@@ -29,3 +29,13 @@ model User {
   password  String
   createdAt DateTime @default(now())
 }
+
+model WeddingExpense {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  description String
+  type        String
+  totalValue  Float
+  paidValue   Float
+  createdAt   DateTime @default(now())
+}

@@ -23,6 +23,7 @@ export default function DashboardHeader() {
         {/* desktop */}
         <nav className="hidden md:flex gap-4 items-center">
           <Link href="/dashboard" className={linkClass("/dashboard")}>Home</Link>
+          <Link href="/dashboard/financeiro" className={linkClass("/dashboard/financeiro")}>Financeiro</Link>
           <Link href="/dashboard/guest" className={linkClass("/dashboard/guest")}>Convidados</Link>
           <Link href="/dashboard/users" className={linkClass("/dashboard/users")}>Usuários</Link>
           <button
@@ -46,6 +47,7 @@ export default function DashboardHeader() {
         }`}
       >
         <Link href="/dashboard" onClick={() => setIsMenuOpen(false)} className={linkClass("/dashboard")}>Home</Link>
+        <Link href="/dashboard/financeiro" onClick={() => setIsMenuOpen(false)} className={linkClass("/dashboard/financeiro")}>Financeiro</Link>
         <Link href="/dashboard/guest" onClick={() => setIsMenuOpen(false)} className={linkClass("/dashboard/guest")}>Convidados</Link>
         <Link href="/dashboard/users" onClick={() => setIsMenuOpen(false)} className={linkClass("/dashboard/users")}>Usuários</Link>
         <button
