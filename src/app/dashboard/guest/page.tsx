@@ -6,7 +6,7 @@ import { formatPhone } from "@/utils/phoneUtils";
 import Notification from "../../components/notification/notification";
 import Summary from "../../components/summary/summary";
 import GuestFormModal from "../../components/guestFormModal/guestFormModal";
-import { Download } from "lucide-react";
+import { Download, Copy, MessageCircle } from "lucide-react";
 import { exportGuestsToCSV } from "@/utils/exportCSV";
 
 export default function Guest() {
@@ -62,6 +62,31 @@ export default function Guest() {
     });
 
     setTimeout(() => setNotification(null), 4000);
+  };
+
+  const copyPhoneToClipboard = async (phone: string) => {
+    try {
+      await navigator.clipboard.writeText(phone);
+      setNotification({
+        type: "success",
+        message: "Número copiado para a área de transferência!",
+      });
+      setTimeout(() => setNotification(null), 3000);
+    } catch (err) {
+      setNotification({
+        type: "error",
+        message: "Erro ao copiar número",
+      });
+      setTimeout(() => setNotification(null), 3000);
+    }
+  };
+
+  const openWhatsApp = (phone: string, name: string) => {
+    // Remove formatação do telefone para o WhatsApp
+    const cleanPhone = phone.replace(/\D/g, '');
+    const message = encodeURIComponent(`Olá ${name}, tudo bem?`);
+    const whatsappUrl = `https://wa.me/55${cleanPhone}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -144,7 +169,31 @@ export default function Guest() {
                   <td className="p-2 border">
                     {guest.name} {guest.surname}
                   </td>
-                  <td className="p-2 border">{formatPhone(guest.phone)}</td>
+                  <td className="p-2 border">
+                    <div className="flex items-center gap-2">
+                      <a 
+                        href={`tel:${guest.phone}`}
+                        className="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
+                        title={`Ligar para ${guest.name}`}
+                      >
+                        {formatPhone(guest.phone)}
+                      </a>
+                      <button
+                        onClick={() => copyPhoneToClipboard(guest.phone)}
+                        className="p-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded"
+                        title="Copiar número"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => openWhatsApp(guest.phone, guest.name)}
+                        className="p-1 text-green-600 hover:text-green-800 hover:bg-green-100 rounded"
+                        title="Abrir WhatsApp"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
                   <td className="p-2 border">{guest.invitedBy}</td>
                   <td className="p-2 border">{guest.type}</td>
                   <td className="p-2 border text-center">
